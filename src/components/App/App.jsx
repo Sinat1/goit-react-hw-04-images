@@ -81,6 +81,7 @@ export default function App() {
     }
   };
 
+  
   // getImages = async (requestName, page) => {
   //   try {
   //     this.setState({ isLoading: true });
