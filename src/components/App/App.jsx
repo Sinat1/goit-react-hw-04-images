@@ -16,13 +16,51 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   // const [loadAllPages, setLoadAllPages] = useState(false);
 
+
+  // const getImages = async (requestName, page) => {
+  //   try {
+  //     setIsLoading(true);
+  //     const { hits } = await ImageService.fetchImages(requestName, page);
+  //     if (hits.length > 0) {
+  //       setImages([...images, ...hits]);
+  //       // setLoadAllPages(true);
+  //       toast.success('Hooray, we found something!');
+  //       setIsLoading(false);
+  //     } else {
+  //       setIsLoading(false);
+  //       toast.error('Something went wrong');
+  //     }
+  //   } catch (error) {
+  //     toast.error(`${error.message}`);
+  //   }
+  // };
+
   useEffect(() => {
     if (!page || !requestName) {
       return;
+    };
+
+    async function getImages(requestName, page) {
+      setIsLoading(true);
+       try {
+      const { hits } = await ImageService.fetchImages(requestName, page);
+      if (hits.length > 0) {
+        setImages(images => [...images, ...hits]);
+        // setLoadAllPages(true);
+        toast.success('Hooray, we found something!');
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+        toast.error('Something went wrong');
+      }
+    } catch (error) {
+      toast.error(`${error.message}`);
     }
+    }
+
     getImages(requestName, page);
-  });
-  // }, [page, requestName]);
+  }, [page, requestName]);
+  
 
 
   const handleFormSubmit = requestName => {
@@ -34,23 +72,7 @@ export default function App() {
     }
   };
 
-  const getImages = async (requestName, page) => {
-    try {
-      setIsLoading(true);
-      const { hits } = await ImageService.fetchImages(requestName, page);
-      if (hits.length > 0) {
-        setImages([...images, ...hits]);
-        // setLoadAllPages(true);
-        toast.success('Hooray, we found something!');
-        setIsLoading(false);
-      } else {
-        setIsLoading(false);
-        toast.error('Something went wrong');
-      }
-    } catch (error) {
-      toast.error(`${error.message}`);
-    }
-  };
+
 
   const loadMore = () => {
     setPage(page + 1);
