@@ -32,7 +32,9 @@ export default function App() {
       getImages(requestName, page);
 
     
-  }, [page, requestName]);
+  });
+  // }, [page, requestName]);
+
 
   // componentDidUpdate(_, prevState) {
   //   if (
