@@ -11,6 +11,7 @@ export default function App() {
   const [requestName, setRequestName] = useState('');
   const [images, setImages] = useState([]);
   const [bigImageLink, setBigImageLink] = useState('');
+  // eslint-disable-next-line
   const [bigImageDescription, setBigImageDescription] = useState('');
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -52,9 +53,9 @@ export default function App() {
     setPage(page + 1);
   };
 
-  const defineBigImageLink = () => {
-    setBigImageLink(bigImageLink);
-    setBigImageDescription(bigImageDescription);
+  const defineBigImageLink = (link, description) => {
+    setBigImageLink(link);
+    setBigImageDescription(description);
   };
 
   const resetBigImageLink = () => {

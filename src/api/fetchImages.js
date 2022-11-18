@@ -10,7 +10,6 @@ axios.defaults.params = {
 // https://pixabay.com/api/?q=cat&page=1&key=your_key&image_type=photo&orientation=horizontal&per_page=12
 export const fetchImages = async (query, page) => {
   const { data } = await axios.get(`?q=${query}&page=${page}&key=${API_KEY}`);
-  // const {data} = await axios.get(`https://pixabay.com/api/?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`)
 
   return data;
 };
