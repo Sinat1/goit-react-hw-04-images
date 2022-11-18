@@ -14,65 +14,39 @@ export default function App() {
   const [bigImageDescription, setBigImageDescription] = useState('');
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  // const [loadAllPages, setLoadAllPages] = useState(false);
-
-
-  // const getImages = async (requestName, page) => {
-  //   try {
-  //     setIsLoading(true);
-  //     const { hits } = await ImageService.fetchImages(requestName, page);
-  //     if (hits.length > 0) {
-  //       setImages([...images, ...hits]);
-  //       // setLoadAllPages(true);
-  //       toast.success('Hooray, we found something!');
-  //       setIsLoading(false);
-  //     } else {
-  //       setIsLoading(false);
-  //       toast.error('Something went wrong');
-  //     }
-  //   } catch (error) {
-  //     toast.error(`${error.message}`);
-  //   }
-  // };
 
   useEffect(() => {
-    if (!page || !requestName) {
+    if (!requestName) {
       return;
-    };
+    }
 
     async function getImages(requestName, page) {
       setIsLoading(true);
-       try {
-      const { hits } = await ImageService.fetchImages(requestName, page);
-      if (hits.length > 0) {
-        setImages(images => [...images, ...hits]);
-        // setLoadAllPages(true);
-        toast.success('Hooray, we found something!');
-        setIsLoading(false);
-      } else {
-        setIsLoading(false);
-        toast.error('Something went wrong');
+      try {
+        const { hits } = await ImageService.fetchImages(requestName, page);
+        if (hits.length > 0) {
+          setImages([...images, ...hits]);
+          toast.success('Hooray, we found something!');
+          setIsLoading(false);
+        } else {
+          setIsLoading(false);
+          toast.error('Something went wrong');
+        }
+      } catch (error) {
+        toast.error(`${error.message}`);
       }
-    } catch (error) {
-      toast.error(`${error.message}`);
     }
-    }
-
     getImages(requestName, page);
+    // eslint-disable-next-line
   }, [page, requestName]);
-  
-
 
   const handleFormSubmit = requestName => {
-    if (!requestName) {
-      setRequestName('');
+    if (requestName) {
+      setRequestName(requestName);
       setImages([]);
       setPage(1);
-      // setLoadAllPages(false);
     }
   };
-
-
 
   const loadMore = () => {
     setPage(page + 1);
@@ -108,69 +82,3 @@ export default function App() {
     </div>
   );
 }
-
-// state = {
-//   requestName: '',
-//   images: [],
-//   bigImageLink: '',
-//   bigImageDescription: '',
-//   page: 1,
-//   isLoading: false,
-//   loadAllPages: false,
-// };
-
-// componentDidUpdate(_, prevState) {
-//   if (
-//     prevState.page !== this.state.page ||
-//     prevState.requestName !== this.state.requestName
-//   ) {
-//     this.getImages(this.state.requestName, this.state.page);
-//   }
-// }
-
-// handleFormSubmit = requestName => {
-//   if (requestName !== this.state.requestName) {
-//     this.setState({
-//       requestName,
-//       images: [],
-//       page: 1,
-//       loadAllPages: false,
-//     });
-//   }
-// };
-
-// getImages = async (requestName, page) => {
-//   try {
-//     this.setState({ isLoading: true });
-//     const { hits } = await ImageService.fetchImages(requestName, page);
-//     if (hits.length > 0) {
-//       this.setState(prevState => ({
-//         images: [...prevState.images, ...hits],
-//         loadAllPages: true,
-//       }));
-//       toast.success('Hooray, we found something!');
-//       this.setState({ isLoading: false });
-//     } else {
-//       this.setState({ isLoading: false });
-//       toast.error('Something went wrong');
-//     }
-//   } catch (error) {
-//     toast.error(`${error.message}`);
-//   }
-// };
-
-// loadMore = () => {
-//   this.setState(prevState => ({
-//     page: prevState.page + 1,
-//   }));
-// };
-
-// setBigImageLink = (link, desc) => {
-//   this.setState({ bigImageLink: link, bigImageDescription: desc });
-// };
-
-// resetBigImageLink = () => {
-//   this.setState({ bigImageLink: '', bigImageDescription: '' });
-// };
-
-// const { images, requestName, bigImageLink, isLoading } = this.state;
